@@ -70,9 +70,20 @@ const getUserInfo = async (req, res) => {
     }
 }
 
+// logout
+
+const userLogOut = async (req, res)=>{
+    try {
+        await res.cookie('token', '').json(true)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 module.exports = {
     createUser,
     getUser,
     createUserLogin,
-    getUserInfo
+    getUserInfo,
+    userLogOut
 }
