@@ -34,7 +34,6 @@ const AccountPage = () => {
     } else {
       return classes+= " bg-gray-200";
     }
-    return classes;
   }
 
   if (redirect) {

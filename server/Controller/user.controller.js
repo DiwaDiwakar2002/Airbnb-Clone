@@ -1,6 +1,10 @@
 const User = require("../Models/user.model.js")
+const Place = require("../Models/place.model.js")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const imageDownloader = require("image-downloader")
+const path = require("path")
+const fs = require("fs")
 
 const bcryptSalt = bcrypt.genSaltSync(10)
 const jwtSecret = "c49w84d9c84w9dc8wdc7"
@@ -72,10 +76,48 @@ const getUserInfo = async (req, res) => {
 
 // logout
 
-const userLogOut = async (req, res)=>{
+const userLogOut = async (req, res) => {
     try {
         await res.cookie('token', '').json(true)
     } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+// upload photo
+const uploadPhoto = async (req, res) => {
+    try {
+        const { link } = req.body
+        const newName = "photo" + Date.now() + ".jpg"
+        const dest = path.join(__dirname, "../uploads", newName)
+
+        await imageDownloader.image({
+            url: link,
+            dest: dest
+        })
+
+        res.status(200).json(newName)
+    } catch (error) {
+        console.error("Error downloading image:", error)
+        res.status(500).json({ message: error.message })
+    }
+}
+
+// upload files
+const uploadFile = async (req, res) => {
+    try {
+        const uploadedFiles = []
+        for (let i = 0; i < req.files.length; i++) {
+            const {path, originalname} = req.files[i]
+            const parts = originalname.split('.')
+            const ext = parts[parts.length - 1]
+            const newPath = path + '.' + ext
+            fs.renameSync(path, newPath)
+            uploadedFiles.push(newPath.replace('uploads\\', ''))
+        }
+        res.status(200).json(uploadedFiles)
+    } catch (error) {
+        console.error("Error uploading image:", error)
         res.status(500).json({ message: error.message })
     }
 }
@@ -85,5 +127,7 @@ module.exports = {
     getUser,
     createUserLogin,
     getUserInfo,
-    userLogOut
+    userLogOut,
+    uploadPhoto,
+    uploadFile
 }
