@@ -13,7 +13,7 @@ const Perks = ({ selected, onChange }) => {
   return (
     <>
       <label className="border p-4 flex gap-2 my-auto cursor-pointer">
-        <input type="checkbox" name="wifi" onChange={handleCheckBox} />
+        <input type="checkbox" checked={selected.includes("wifi")} name="wifi" onChange={handleCheckBox} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -31,7 +31,7 @@ const Perks = ({ selected, onChange }) => {
         <span>Free Wi-Fi</span>
       </label>
       <label className="border p-4 flex gap-2 my-auto cursor-pointer">
-        <input type="checkbox" name="parking" onChange={handleCheckBox} />
+        <input type="checkbox" checked={selected.includes("parking")} name="parking" onChange={handleCheckBox} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -50,7 +50,7 @@ const Perks = ({ selected, onChange }) => {
         <span>Parking</span>
       </label>
       <label className="border p-4 flex gap-2 my-auto cursor-pointer">
-        <input type="checkbox" name="tv" onChange={handleCheckBox} />
+        <input type="checkbox" checked={selected.includes("tv")} name="tv" onChange={handleCheckBox} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -69,7 +69,7 @@ const Perks = ({ selected, onChange }) => {
         <span>TV</span>
       </label>
       <label className="border p-4 flex gap-2 my-auto cursor-pointer">
-        <input type="checkbox" name="ac" onChange={handleCheckBox} />
+        <input type="checkbox" checked={selected.includes("ac")} name="ac" onChange={handleCheckBox} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -88,7 +88,7 @@ const Perks = ({ selected, onChange }) => {
         <span>AC</span>
       </label>
       <label className="border p-4 flex gap-2 my-auto cursor-pointer">
-        <input type="checkbox" name="atm" onChange={handleCheckBox} />
+        <input type="checkbox" checked={selected.includes("atm")} name="atm" onChange={handleCheckBox} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -107,7 +107,7 @@ const Perks = ({ selected, onChange }) => {
         <span>ATM</span>
       </label>
       <label className="border p-4 flex gap-2 my-auto cursor-pointer">
-        <input type="checkbox" name="pets" onChange={handleCheckBox} />
+        <input type="checkbox" checked={selected.includes("pets")} name="pets" onChange={handleCheckBox} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

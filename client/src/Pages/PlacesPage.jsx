@@ -1,32 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PlacesPage = () => {
-
+  const [places, setPlaces] = useState([]);
+  useEffect(() => {
+    try {
+      const fetchPlaceData = async () => {
+        const { data } = await axios.get("/places");
+        setPlaces(data);
+      };
+      fetchPlaceData();
+    } catch (error) {
+      console.error("error fetching place data", error);
+    }
+  }, []);
   return (
     <section>
-        <div className="text-center">
-          <Link
-            to={"/account/places/new"}
-            className="bg-primary text-white py-2 px-6 rounded-full inline-flex gap-2"
+      <div className="text-center">
+        <Link
+          to={"/account/places/new"}
+          className="bg-primary text-white py-2 px-6 rounded-full inline-flex gap-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-4 my-auto"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-4 my-auto"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            Add new place
-          </Link>
-        </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          Add new place
+        </Link>
+      </div>
+      <div className="mt-4">
+        {places.length > 0 &&
+          places.map((value, index) => (
+            <Link to={'/account/places/'+ value._id} key={index} className="cursor-pointer flex gap-4 bg-gray-100 p-4 rounded-lg">
+              <div className="h-32 w-32 bg-gray-300 shrink-0">
+                {value.photos.length > 0 && (
+                  <img src={value.photos[0]} alt="thumbnail" />
+                )}
+              </div>
+              <div>
+                <h2 className="text-xl">{value.title}</h2>
+                <p className="text-sm text-gray-500 mt-2">{value.description}</p>
+              </div>
+            </Link>
+          ))}
+      </div>
     </section>
   );
 };

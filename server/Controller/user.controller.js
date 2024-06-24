@@ -158,6 +158,76 @@ const addNewPlace = (req, res) => {
     }
 }
 
+// get place data
+
+const getPlaceData = async (req, res) => {
+    try {
+        const { token } = req.cookies
+        jwt.verify(token, jwtSecret, {}, async (err, user) => {
+            const { id } = user
+            const data = await Place.find({ owner: id })
+            res.status(200).json(data)
+        })
+    } catch (error) {
+        console.error("Error getting place data:", error)
+        res.status(500).json({ message: error.message })
+    }
+
+}
+
+// edit form
+
+const editPlaceData = async (req, res) => {
+    try {
+        const { id } = req.params
+        const data = await Place.findById(id)
+        res.status(200).json(data)
+    } catch (error) {
+        console.error("Error editing place data:", error)
+        res.status(500).json({ message: error.message })
+    }
+}
+
+// update data of form
+
+const updateFormData = async (req, res) => {
+    try {
+        const { token } = req.cookies
+        const {
+            id,
+            title,
+            address,
+            photos,
+            description,
+            perks,
+            extraInfo,
+            checkIn,
+            checkOut,
+            maxGuest } = req.body
+        jwt.verify(token, jwtSecret, {}, async (err, user) => {
+            if (err) throw err
+            const placeDoc = await Place.findById(id)
+            if (user.id === placeDoc.owner) {
+                placeDoc.set({
+                    title,
+                    address,
+                    photos,
+                    description,
+                    perks,
+                    extraInfo,
+                    checkIn,
+                    checkOut,
+                    maxGuest
+                })
+                await Place.save()
+                res.status(200).json("form updated")
+            }
+        })
+    } catch (error) {
+        console.error("Error updating place data:", error)
+        res.status(500).json({ message: error.message })
+    }
+}
 
 
 module.exports = {
@@ -168,5 +238,8 @@ module.exports = {
     userLogOut,
     uploadPhoto,
     uploadFile,
-    addNewPlace
+    addNewPlace,
+    getPlaceData,
+    editPlaceData,
+    updateFormData
 }
