@@ -103,12 +103,12 @@ const uploadPhoto = async (req, res) => {
     }
 }
 
-// upload files
+// upload files to upload folder
 const uploadFile = async (req, res) => {
     try {
         const uploadedFiles = []
         for (let i = 0; i < req.files.length; i++) {
-            const {path, originalname} = req.files[i]
+            const { path, originalname } = req.files[i]
             const parts = originalname.split('.')
             const ext = parts[parts.length - 1]
             const newPath = path + '.' + ext
@@ -122,6 +122,44 @@ const uploadFile = async (req, res) => {
     }
 }
 
+// save add new place data to backend
+const addNewPlace = (req, res) => {
+    try {
+        const { token } = req.cookies
+        const {
+            title,
+            address,
+            photos,
+            description,
+            perks,
+            extraInfo,
+            checkIn,
+            checkOut,
+            maxGuest } = req.body
+        jwt.verify(token, jwtSecret, {}, async (err, user) => {
+            if (err) throw err
+            const placeDoc = await Place.create({
+                owner: user.id,
+                title,
+                address,
+                photos,
+                description,
+                perks,
+                extraInfo,
+                checkIn,
+                checkOut,
+                maxGuest
+            })
+            res.status(200).json(placeDoc)
+        })
+    } catch (error) {
+        console.error("Error saving add new place data:", error)
+        res.status(500).json({ message: error.message })
+    }
+}
+
+
+
 module.exports = {
     createUser,
     getUser,
@@ -129,5 +167,6 @@ module.exports = {
     getUserInfo,
     userLogOut,
     uploadPhoto,
-    uploadFile
+    uploadFile,
+    addNewPlace
 }

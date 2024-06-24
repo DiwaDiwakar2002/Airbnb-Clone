@@ -1,37 +1,37 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 
 const RegisterPage = () => {
-    // state for form data
+  // state for form data
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-//   store formdata to state
-const handleChange = (e) =>{
-    const {name, value} = e.target
-    setFormData({...formData, [name]:value})
-}
+  //   store formdata to state
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-// send formdata to backend
-const handleSubmit = async (e) =>{
-    e.preventDefault()
+  // send formdata to backend
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const res = await axios.post("/register", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
-    })
-    console.log(res) 
-    alert("Registration Successful :)")
+      });
+      console.log(res);
+      alert("Registration Successful :)");
     } catch (error) {
-      console.log(error)
-      alert("Registration Failed :(")
+      console.log(error);
+      alert("Registration Failed :(");
     }
-}
+  };
 
   return (
     <>
@@ -40,6 +40,7 @@ const handleSubmit = async (e) =>{
           <h1 className="text-4xl text-center mb-5">Register</h1>
           <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
             <input
+              required
               type="text"
               placeholder="your name"
               value={formData.name}
@@ -47,6 +48,7 @@ const handleSubmit = async (e) =>{
               onChange={handleChange}
             />
             <input
+              required
               type="email"
               placeholder="your@gmail.com"
               value={formData.email}
@@ -54,6 +56,7 @@ const handleSubmit = async (e) =>{
               onChange={handleChange}
             />
             <input
+              required
               type="password"
               placeholder="password"
               value={formData.password}

@@ -5,7 +5,7 @@ import { Context } from "../UserContext";
 
 const LoginPage = () => {
   // context
-  const {setUser} = useContext(Context)
+  const { setUser } = useContext(Context);
 
   // login data state
   const [loginData, setLoginData] = useState({
@@ -34,7 +34,7 @@ const LoginPage = () => {
         email: loginData.email,
         password: loginData.password,
       });
-      setUser(res.data)
+      setUser(res.data);
       alert("Login Successful");
       setRedirect(true);
     } catch (error) {
@@ -48,6 +48,7 @@ const LoginPage = () => {
         <h1 className="text-4xl text-center mb-5">Login</h1>
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <input
+            required
             type="email"
             placeholder="your@gmail.com"
             name="email"
@@ -55,6 +56,7 @@ const LoginPage = () => {
             onChange={handleChange}
           />
           <input
+            required
             type="password"
             placeholder="password"
             name="password"

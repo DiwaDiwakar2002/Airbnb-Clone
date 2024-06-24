@@ -6,7 +6,8 @@ import Layout from "./Layout/Layout";
 import RegisterPage from "./Pages/RegisterPage";
 import axios from "axios";
 import UserContext from "./UserContext";
-import AccountPage from "./Pages/AccountPage";
+import ProfilePage from "./Pages/ProfilePage";
+import PlacesForm from "./Components/PlacesForm";
 
 // base url
 axios.defaults.baseURL = "http://localhost:3001";
@@ -21,8 +22,8 @@ function App() {
             <Route index element={<IndexPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/account/:subpage?" element={<AccountPage />} />
-            <Route path="/account/:subpage/:action" element={<AccountPage />} />
+            <Route path="/account/:subpage?" element={<ProfilePage />} />
+            <Route path="/account/:subpage/new" element={<PlacesForm />} />
           </Route>
         </Routes>
       </UserContext>
