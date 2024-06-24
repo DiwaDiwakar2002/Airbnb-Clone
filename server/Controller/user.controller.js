@@ -135,7 +135,8 @@ const addNewPlace = (req, res) => {
             extraInfo,
             checkIn,
             checkOut,
-            maxGuest } = req.body
+            maxGuest,
+            price, } = req.body
         jwt.verify(token, jwtSecret, {}, async (err, user) => {
             if (err) throw err
             const placeDoc = await Place.create({
@@ -148,7 +149,8 @@ const addNewPlace = (req, res) => {
                 extraInfo,
                 checkIn,
                 checkOut,
-                maxGuest
+                maxGuest,
+                price,
             })
             res.status(200).json(placeDoc)
         })
@@ -160,7 +162,7 @@ const addNewPlace = (req, res) => {
 
 // get place data
 
-const getPlaceData = async (req, res) => {
+const getUserPlaceData = async (req, res) => {
     try {
         const { token } = req.cookies
         jwt.verify(token, jwtSecret, {}, async (err, user) => {
@@ -169,7 +171,7 @@ const getPlaceData = async (req, res) => {
             res.status(200).json(data)
         })
     } catch (error) {
-        console.error("Error getting place data:", error)
+        console.error("Error getting user place data:", error)
         res.status(500).json({ message: error.message })
     }
 
@@ -203,9 +205,10 @@ const updateFormData = async (req, res) => {
             extraInfo,
             checkIn,
             checkOut,
-            maxGuest } = req.body
+            maxGuest,
+            price } = req.body
         jwt.verify(token, jwtSecret, {}, async (err, user) => {
-            if(err) throw err
+            if (err) throw err
             const placeDoc = await Place.findById(id)
             if (user.id === placeDoc.owner.toString()) {
                 placeDoc.set({
@@ -217,7 +220,8 @@ const updateFormData = async (req, res) => {
                     extraInfo,
                     checkIn,
                     checkOut,
-                    maxGuest
+                    maxGuest,
+                    price,
                 })
                 await placeDoc.save()
                 res.status(200).json("form updated")
@@ -229,6 +233,17 @@ const updateFormData = async (req, res) => {
     }
 }
 
+// get data for index page
+
+const getPlaceData = async (req, res) => {
+    try {
+        const placeDoc = await Place.find()
+        res.status(200).json(placeDoc)
+    } catch (error) {
+        console.error("Error getting place data:", error)
+        res.status(500).json({ message: error.message })
+    }
+}
 
 module.exports = {
     createUser,
@@ -239,7 +254,8 @@ module.exports = {
     uploadPhoto,
     uploadFile,
     addNewPlace,
-    getPlaceData,
+    getUserPlaceData,
     editPlaceData,
-    updateFormData
+    updateFormData,
+    getPlaceData
 }

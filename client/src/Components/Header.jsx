@@ -6,14 +6,14 @@ const Header = () => {
   const {user} = useContext(Context)
   return (
     <header className="flex justify-between">
-      <Link to={"/"} href="" className="flex items-center gap-1">
+      <Link to={"/"} href="" className="flex items-center gap-1 text-primary">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-8 h-8 -rotate-90"
+          className="w-8 h-8 -rotate-90 "
         >
           <path
             strokeLinecap="round"

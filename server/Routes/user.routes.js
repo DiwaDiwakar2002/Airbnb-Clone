@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const { createUser, getUser, createUserLogin, getUserInfo, userLogOut, uploadPhoto, uploadFile, addNewPlace, getPlaceData, editPlaceData, updateFormData } = require("../Controller/user.controller");
+const { createUser, getUser, createUserLogin, getUserInfo, userLogOut, uploadPhoto, uploadFile, addNewPlace, getPlaceData, editPlaceData, updateFormData, getUserPlaceData } = require("../Controller/user.controller");
 
 // Create a multer instance for file uploads
 const photoMiddleware = multer({ dest: 'uploads/' });
@@ -24,6 +24,7 @@ router.post("/places", addNewPlace)
 
 // get place data
 router.get("/places", getPlaceData)
+router.get("/user-places", getUserPlaceData)
 router.get('/places/:id', editPlaceData)
 
 // update form data

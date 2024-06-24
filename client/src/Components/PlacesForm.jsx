@@ -14,6 +14,7 @@ const PlacesForm = () => {
     checkIn: "",
     checkOut: "",
     maxGuest: 1,
+    price: "",
   });
   const [addedPhotos, setAddedPhotos] = useState([]);
   const [perks, setPerks] = useState([]);
@@ -51,7 +52,6 @@ const PlacesForm = () => {
     }
   };
 
-
   useEffect(() => {
     if (!id) {
       return;
@@ -67,6 +67,7 @@ const PlacesForm = () => {
           checkIn: data.checkIn,
           checkOut: data.checkOut,
           maxGuest: data.maxGuest,
+          price: data.price,
         });
         setAddedPhotos(data.photos);
         setPerks(data.perks);
@@ -138,7 +139,7 @@ const PlacesForm = () => {
         <p className="text-sm text-gray-500">
           Enter check-in and check-out time
         </p>
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           <div className="">
             <h3 className="mt-2 -mb-1">Check In time</h3>
             <input
@@ -167,6 +168,16 @@ const PlacesForm = () => {
               name="maxGuest"
               onChange={placeHandleChange}
               value={placeData.maxGuest}
+            />
+          </div>
+          <div className="">
+            <h3 className="mt-2 -mb-1">Price</h3>
+            <input
+              type="text"
+              placeholder="ex: Rs.450/per night"
+              name="price"
+              onChange={placeHandleChange}
+              value={placeData.price}
             />
           </div>
         </div>

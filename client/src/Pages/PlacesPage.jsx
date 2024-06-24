@@ -7,7 +7,7 @@ const PlacesPage = () => {
   useEffect(() => {
     try {
       const fetchPlaceData = async () => {
-        const { data } = await axios.get("/places");
+        const { data } = await axios.get("/user-places");
         setPlaces(data);
       };
       fetchPlaceData();
