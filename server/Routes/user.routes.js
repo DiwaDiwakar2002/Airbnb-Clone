@@ -27,6 +27,6 @@ router.get("/places", getPlaceData)
 router.get('/places/:id', editPlaceData)
 
 // update form data
-router.put('places', updateFormData)
+router.put('/places/:id', updateFormData)
 
 module.exports = router;

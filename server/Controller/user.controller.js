@@ -192,9 +192,9 @@ const editPlaceData = async (req, res) => {
 
 const updateFormData = async (req, res) => {
     try {
+        const { id } = req.params
         const { token } = req.cookies
         const {
-            id,
             title,
             address,
             photos,
@@ -205,9 +205,9 @@ const updateFormData = async (req, res) => {
             checkOut,
             maxGuest } = req.body
         jwt.verify(token, jwtSecret, {}, async (err, user) => {
-            if (err) throw err
+            if(err) throw err
             const placeDoc = await Place.findById(id)
-            if (user.id === placeDoc.owner) {
+            if (user.id === placeDoc.owner.toString()) {
                 placeDoc.set({
                     title,
                     address,
@@ -219,7 +219,7 @@ const updateFormData = async (req, res) => {
                     checkOut,
                     maxGuest
                 })
-                await Place.save()
+                await placeDoc.save()
                 res.status(200).json("form updated")
             }
         })

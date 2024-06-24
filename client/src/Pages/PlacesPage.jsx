@@ -42,15 +42,25 @@ const PlacesPage = () => {
       <div className="mt-4">
         {places.length > 0 &&
           places.map((value, index) => (
-            <Link to={'/account/places/'+ value._id} key={index} className="cursor-pointer flex gap-4 bg-gray-100 p-4 rounded-lg">
-              <div className="h-32 w-32 bg-gray-300 shrink-0">
+            <Link
+              to={"/account/places/" + value._id}
+              key={index}
+              className="cursor-pointer flex gap-4 bg-gray-100 p-4 rounded-lg"
+            >
+              <div className="flex h-32 w-32 shrink-0">
                 {value.photos.length > 0 && (
-                  <img src={value.photos[0]} alt="thumbnail" />
+                  <img
+                    src={"http://localhost:3001/uploads/" + value.photos[0]}
+                    alt="thumbnail"
+                    className="object-cover rounded-md"
+                  />
                 )}
               </div>
               <div>
                 <h2 className="text-xl">{value.title}</h2>
-                <p className="text-sm text-gray-500 mt-2">{value.description}</p>
+                <p className="text-sm text-gray-500 mt-2">
+                  {value.description}
+                </p>
               </div>
             </Link>
           ))}

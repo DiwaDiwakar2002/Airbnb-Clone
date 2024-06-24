@@ -30,14 +30,12 @@ const PlacesForm = () => {
       photos: addedPhotos,
       perks,
     };
+
     e.preventDefault();
     if (id) {
       // update
       try {
-        await axios.put("/places", {
-          id,
-          ...placeFormData,
-        });
+        await axios.put(`/places/${id}`, placeFormData);
         setRedirect(true);
       } catch (error) {
         console.error("Error in updating place", error);
@@ -53,9 +51,6 @@ const PlacesForm = () => {
     }
   };
 
-  if (redirect) {
-    return <Navigate to={"/account/places"} />;
-  }
 
   useEffect(() => {
     if (!id) {
@@ -81,6 +76,10 @@ const PlacesForm = () => {
     };
     fetchFormData();
   }, [id]);
+
+  if (redirect) {
+    return <Navigate to={"/account/places"} />;
+  }
 
   return (
     <div className="">
