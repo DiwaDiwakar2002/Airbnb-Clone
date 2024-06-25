@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import PlaceImg from "../Components/PlaceImg";
 
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
@@ -48,13 +49,7 @@ const PlacesPage = () => {
               className="cursor-pointer flex gap-4 bg-gray-100 p-4 rounded-lg"
             >
               <div className="flex h-32 w-32 shrink-0">
-                {value.photos.length > 0 && (
-                  <img
-                    src={"http://localhost:3001/uploads/" + value.photos[0]}
-                    alt="thumbnail"
-                    className="object-cover rounded-md"
-                  />
-                )}
+                <PlaceImg value={value.photos} index={index}/>
               </div>
               <div>
                 <h2 className="text-xl">{value.title}</h2>

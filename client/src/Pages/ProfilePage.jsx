@@ -4,6 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import PlacesPage from "./PlacesPage";
 import AccountNavBar from "../Components/AccountNavBar";
+import BookingsPage from "./BookingsPage";
 
 const ProfilePage = () => {
   const [redirect, setRedirect] = useState(null);
@@ -47,6 +48,8 @@ const ProfilePage = () => {
           </button>
         </div>
       )}
+      {/* my bookings */}
+      {subpage == "bookings" && <BookingsPage />}
 
       {/* my accommodation page */}
       {subpage == "places" && <PlacesPage />}

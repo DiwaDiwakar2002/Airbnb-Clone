@@ -82,7 +82,7 @@ const IndexPlacePage = () => {
         </svg>
         {place.address}
       </a>
-      <div className="relative">
+      <div className="relative h-50">
         <div className="grid gap-2 grid-cols-[2fr_1fr] rounded-2xl overflow-hidden mt-8">
           <div>
             {place.photos?.[0] && (

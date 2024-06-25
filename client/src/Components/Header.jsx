@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { Context } from "../UserContext";
 
 const Header = () => {
-  const {user} = useContext(Context)
+  const { user } = useContext(Context);
   return (
     <header className="flex justify-between">
       <Link to={"/"} href="" className="flex items-center gap-1 text-primary">
-        <svg
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -20,7 +20,22 @@ const Header = () => {
             strokeLinejoin="round"
             d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
           />
+        </svg> */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"
+          />
         </svg>
+
         <span className="font-bold text-xl">airbnb</span>
       </Link>
       <div className="flex gap-2 shadow-md shadow-gray-300 border border-gray-300 rounded-full py-2 px-4">
@@ -47,7 +62,7 @@ const Header = () => {
         </button>
       </div>
       <Link
-        to={user? "/account" : "/login"}
+        to={user ? "/account" : "/login"}
         className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4"
       >
         <svg
@@ -78,11 +93,7 @@ const Header = () => {
             />
           </svg>
         </div>
-        {!!user && (
-          <div>
-            {user.name}
-          </div>
-        )}
+        {!!user && <div>{user.name}</div>}
       </Link>
     </header>
   );

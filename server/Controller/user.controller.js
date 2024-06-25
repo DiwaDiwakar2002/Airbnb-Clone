@@ -1,5 +1,6 @@
 const User = require("../Models/user.model.js")
 const Place = require("../Models/place.model.js")
+const Booking = require("../Models/bookings.model.js")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const imageDownloader = require("image-downloader")
@@ -8,6 +9,16 @@ const fs = require("fs")
 
 const bcryptSalt = bcrypt.genSaltSync(10)
 const jwtSecret = "c49w84d9c84w9dc8wdc7"
+
+// getting user data from cookies
+function getUserDataFromReq(req) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
+      resolve(userData);
+    });
+  });
+}
 
 const createUser = async (req, res) => {
     try {
@@ -245,6 +256,52 @@ const getPlaceData = async (req, res) => {
     }
 }
 
+// bookings
+
+const createBooking = async (req, res) => {
+    try {
+    const userData = await getUserDataFromReq(req)
+        const {
+            place,
+            name,
+            email,
+            phone,
+            numberOfGuest,
+            checkIn,
+            checkOut,
+            price,
+        } = req.body
+        const data = await Booking.create({
+            user: userData.id,
+            place,
+            name,
+            email,
+            phone,
+            numberOfGuest,
+            checkIn,
+            checkOut,
+            price,
+        })
+        res.status(200).json(data)
+    } catch (error) {
+        console.error("Error in create booking:", error)
+        res.status(500).json({ message: error.message })
+    }
+}
+
+// get booking details
+const getBookingData = async (req, res)=>{
+    try {
+        const userData = await getUserDataFromReq(req);
+        const bookingDoc = await Booking.find({user:userData.id}).populate('place')
+        res.status(200).json(bookingDoc)
+    } catch (error) {
+        console.error("Error in get booking details:", error)
+        res.status(500).json({ message: error.message })
+    }
+
+}
+
 module.exports = {
     createUser,
     getUser,
@@ -257,5 +314,7 @@ module.exports = {
     getUserPlaceData,
     editPlaceData,
     updateFormData,
-    getPlaceData
+    getPlaceData,
+    createBooking,
+    getBookingData
 }
